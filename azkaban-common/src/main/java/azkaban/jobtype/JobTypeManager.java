@@ -326,6 +326,7 @@ public class JobTypeManager {
             jobProps, jobType));
       }
 
+      System.out.println("Running pluginJobProps");
       Props pluginJobProps = pluginSet.getPluginJobProps(jobType);
       // For default jobtypes, even though they don't have pluginJobProps configured,
       // they still need to load properties from common.properties file if it's present
@@ -334,17 +335,23 @@ public class JobTypeManager {
         pluginJobProps = pluginSet.getCommonPluginJobProps();
       }
       if (pluginJobProps != null) {
+        System.out.println("pluginJobProps detected");
         for (final String k : pluginJobProps.getKeySet()) {
           if (!jobProps.containsKey(k)) {
+            System.out.println(commonJobProps.get(k));
             jobProps.put(k, pluginJobProps.get(k));
           }
         }
       }
 
+      System.out.println("Running commonJobProps");
       Props commonJobProps = pluginSet.getCommonPluginJobProps();
+      
       if (commonJobProps != null) {
+        System.out.println("commonJobProps detected");
         for (String k : commonJobProps.getKeySet()) {
           if (!jobProps.containsKey(k)) {
+            System.out.println(commonJobProps.get(k));
             jobProps.put(k, commonJobProps.get(k));
           }
         }
